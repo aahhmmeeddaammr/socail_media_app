@@ -104,15 +104,19 @@ export default function Post({ post, sc }: { post: Post; sc?: boolean }) {
         title={post.user.name}
         subheader="September 14, 2016"
       />
-      <CardContent sx={{ position: "relative", height: "500px" }}>
+      <CardContent>
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
           {post.body}
         </Typography>
-        <Image
-          fill
-          src={post.image || "https://linked-posts.routemisr.com/uploads/a7a5247d-bb49-4173-8af9-669689a037dc-IMG_20230620_012338_739.jpg"}
-          alt={post.body || "lol"}
-        />
+        {post.image && (
+          <Box sx={{ position: "relative", height: "500px" }}>
+            <Image
+              fill
+              src={post.image || "https://linked-posts.routemisr.com/uploads/a7a5247d-bb49-4173-8af9-669689a037dc-IMG_20230620_012338_739.jpg"}
+              alt={post.body || "lol"}
+            />
+          </Box>
+        )}
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
