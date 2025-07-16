@@ -18,7 +18,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearUserData, getProfile } from "@/lib/redux/slices/AuthSlice";
 import { store } from "@/lib/redux/store";
 import { useRouter } from "next/navigation";
-const pages = ["posts", "profile", "Blog"];
+import { deleteCookie, getCookie } from "cookies-next/client";
+const pages = ["posts", "profile"];
 const settings = [
   { text: "Login", path: "/login" },
   { text: "Register", path: "/register" },
@@ -27,7 +28,7 @@ const settings = [
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-  const { user } = useSelector((store: { authReducer: AuthSlice }) => store.authReducer);
+  const { token, user } = useSelector((store: { authReducer: AuthSlice }) => store.authReducer);
   const router = useRouter();
   const dispatch = useDispatch<typeof store.dispatch>();
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -46,10 +47,10 @@ function Navbar() {
   };
 
   React.useEffect(() => {
-    console.log("lol");
-
-    dispatch(getProfile());
-  }, []);
+    if (getCookie("token")) {
+      dispatch(getProfile());
+    }
+  }, [token]);
 
   return (
     <AppBar position="static">
@@ -101,11 +102,14 @@ function Navbar() {
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: "block", md: "none" } }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: "center" }}>{page}</Typography>
-                </MenuItem>
-              ))}
+              {getCookie("token") &&
+                pages.map((page) => (
+                  <Button key={page} onClick={handleCloseNavMenu} sx={{ my: 2, color: "white", display: "block", textDecoration: "none" }}>
+                    <Link style={{ textDecoration: "none", color: "black" }} href={`/${page}`}>
+                      {page}
+                    </Link>
+                  </Button>
+                ))}
             </Menu>
           </Box>
           <GroupIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
@@ -128,11 +132,14 @@ function Navbar() {
             Social
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button key={page} onClick={handleCloseNavMenu} sx={{ my: 2, color: "white", display: "block" }}>
-                <Link href={`/${page}`}>{page}</Link>
-              </Button>
-            ))}
+            {getCookie("token") &&
+              pages.map((page, i) => (
+                <Button key={page + i} onClick={handleCloseNavMenu} sx={{ my: 2, color: "white", display: "block", textDecoration: "none" }}>
+                  <Link style={{ textDecoration: "none", color: "white" }} href={`/${page}`}>
+                    {page}
+                  </Link>
+                </Button>
+              ))}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
@@ -163,12 +170,13 @@ function Navbar() {
                   </Typography>
                 </MenuItem>
               ))}
-              {user && (
+              {getCookie("token") && (
                 <MenuItem key="LOGOUT" onClick={handleCloseUserMenu}>
                   <Typography
                     component="button"
                     onClick={() => {
                       localStorage.removeItem("token");
+                      deleteCookie("token");
                       dispatch(clearUserData());
                       router.push("/login");
                     }}

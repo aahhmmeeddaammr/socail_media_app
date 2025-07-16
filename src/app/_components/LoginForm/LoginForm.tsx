@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { setToken } from "@/lib/redux/slices/AuthSlice";
 import { useRouter } from "next/navigation";
 import { setCookie } from "cookies-next/client";
+import toast from "react-hot-toast";
 const LoginForm = () => {
   const router = useRouter();
   const dispatcher = useDispatch();
@@ -23,11 +24,13 @@ const LoginForm = () => {
     axios
       .post(`${process.env.baseUrl}/users/signin`, values)
       .then(({ data }) => {
+        toast.success("login successfully");
         dispatcher(setToken(data.token));
         setCookie("token", data.token);
         router.push("/");
       })
       .catch((err) => {
+        toast.error("in-valid email or password");
         console.log({ err });
       });
   };

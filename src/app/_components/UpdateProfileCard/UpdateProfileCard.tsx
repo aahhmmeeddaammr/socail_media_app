@@ -4,9 +4,11 @@ import { Avatar, Box, Button, Card, CardActions, CardContent, CardHeader, Divide
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { getCookie } from "cookies-next/client";
+import { store } from "@/lib/redux/store";
+import { getProfile } from "@/lib/redux/slices/AuthSlice";
 
 interface UpdateProfileForm {
   photo: File | null;
@@ -14,6 +16,7 @@ interface UpdateProfileForm {
 
 const UpdateProfileCard: React.FC = () => {
   const { user } = useSelector((store: { authReducer: AuthSlice }) => store.authReducer);
+  const dispatch = useDispatch<typeof store.dispatch>();
   const [preview, setPreview] = useState<string | null>(user?.photo as string);
   const formik = useFormik<UpdateProfileForm>({
     initialValues: {
@@ -28,6 +31,8 @@ const UpdateProfileCard: React.FC = () => {
             headers: { token: getCookie("token") },
           })
           .then(({ data }) => {
+            dispatch(getProfile());
+
             console.log({ data });
           })
           .catch((error) => {

@@ -39,6 +39,8 @@ const RegisterForm = () => {
       .catch((err) => {
         if (err.response.data.error == "user already exists.") {
           toast.error("user already exists.");
+        } else {
+          toast.error(err.response.data.error);
         }
       });
   };
