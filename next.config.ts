@@ -1,7 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  env: {
+    baseUrl: "https://linked-posts.routemisr.com",
+  },
+  images: {
+    domains: ["linked-posts.routemisr.com"],
+  },
 };
 
 export default nextConfig;
