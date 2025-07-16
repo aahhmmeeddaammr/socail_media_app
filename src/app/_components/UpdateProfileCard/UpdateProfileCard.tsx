@@ -27,7 +27,7 @@ const UpdateProfileCard: React.FC = () => {
       if (values.photo) {
         formData.append("photo", values.photo);
         axios
-          .put(`${process.env.baseUrl}/users/upload-photo`, formData, {
+          .put(`${process.env.NEXT_PUBLIC_BASE_URL}/users/upload-photo`, formData, {
             headers: { token: getCookie("token") },
           })
           .then(({ data }) => {

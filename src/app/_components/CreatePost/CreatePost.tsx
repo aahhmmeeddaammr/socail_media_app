@@ -39,7 +39,7 @@ const CreatePost: React.FC = () => {
       }
 
       axios
-        .post(`${process.env.baseUrl}/posts`, formData, {
+        .post(`${process.env.NEXT_PUBLIC_BASE_URL}/posts`, formData, {
           headers: {
             token: getCookie("token"),
           },

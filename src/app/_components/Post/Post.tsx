@@ -66,7 +66,7 @@ export default function Post({ post, sc }: { post: Post; sc?: boolean }) {
     onSubmit: (values: typeof initialValues, { resetForm }) => {
       axios
         .post(
-          `${process.env.baseUrl}/comments`,
+          `${process.env.NEXT_PUBLIC_BASE_URL}/comments`,
           { ...values, post: post._id },
           {
             headers: {

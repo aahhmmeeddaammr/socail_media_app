@@ -5,7 +5,7 @@ import { getCookie } from "cookies-next/client";
 const initialState: AuthSlice = { token: null, user: null };
 export const getProfile = createAsyncThunk("authSlice/getProfile", async () => {
   return axios
-    .get(`${process.env.baseUrl}/users/profile-data`, {
+    .get(`${process.env.NEXT_PUBLIC_BASE_URL}/users/profile-data`, {
       headers: {
         token: getCookie("token") || "",
       },

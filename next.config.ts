@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   env: {
-    baseUrl: "https://linked-posts.routemisr.com",
+    NEXT_PUBLIC_BASE_URL: "https://linked-posts.routemisr.com",
   },
   images: {
     domains: ["linked-posts.routemisr.com"],

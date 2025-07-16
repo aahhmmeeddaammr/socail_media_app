@@ -22,7 +22,7 @@ const LoginForm = () => {
 
   const onSubmit = (values: typeof initialValues) => {
     axios
-      .post(`${process.env.baseUrl}/users/signin`, values)
+      .post(`${process.env.NEXT_PUBLIC_BASE_URL}/users/signin`, values)
       .then(({ data }) => {
         toast.success("login successfully");
         dispatcher(setToken(data.token));

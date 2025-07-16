@@ -6,7 +6,7 @@ const initialState: PostsSlice = { posts: null, isLoading: false };
 
 export const getAllPosts = createAsyncThunk("postsSlice/getAllPosts", async () => {
   return axios
-    .get(`${process.env.baseUrl}/posts?limit=50`, {
+    .get(`${process.env.NEXT_PUBLIC_BASE_URL}/posts?limit=50`, {
       headers: {
         token: getCookie("token") || "",
       },
@@ -16,7 +16,7 @@ export const getAllPosts = createAsyncThunk("postsSlice/getAllPosts", async () =
 
 export const getAllSinglePost = createAsyncThunk("postsSlice/getAllSinglePost", async (id: string) => {
   return axios
-    .get(`${process.env.baseUrl}/posts/${id}`, {
+    .get(`${process.env.NEXT_PUBLIC_BASE_URL}/posts/${id}`, {
       headers: {
         token: getCookie("token") || "",
       },
@@ -25,7 +25,7 @@ export const getAllSinglePost = createAsyncThunk("postsSlice/getAllSinglePost", 
 });
 export const getAllUserPosts = createAsyncThunk("postsSlice/getAllUserPosts", async (id: string) => {
   return axios
-    .get(`${process.env.baseUrl}/users/${id}/posts?limit=20`, {
+    .get(`${process.env.NEXT_PUBLIC_BASE_URL}/users/${id}/posts?limit=20`, {
       headers: {
         token: getCookie("token") || "",
       },

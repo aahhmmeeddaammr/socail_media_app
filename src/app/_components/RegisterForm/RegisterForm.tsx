@@ -31,7 +31,7 @@ const RegisterForm = () => {
 
   const onSubmit = (values: typeof initialValues) => {
     axios
-      .post(`${process.env.baseUrl}/users/signup`, values)
+      .post(`${process.env.NEXT_PUBLIC_BASE_URL}/users/signup`, values)
       .then(() => {
         toast.success("user resgister successfully.");
         router.push("/login");
